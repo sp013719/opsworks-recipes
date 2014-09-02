@@ -1,0 +1,3 @@
+# IPMI modules
+options ipmi_si type=kcs ports=0xca8 regspacings=4
+install ipmi modprobe ipmi_msghandler;modprobe ipmi_devintf;modprobe ipmi_si
