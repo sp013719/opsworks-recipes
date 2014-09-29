@@ -1,0 +1,12 @@
+#!/bin/sh
+
+export LC_ALL=C
+
+BACKUP_DIR=/trend/atlassian/confluence-data/backups
+BACKUP_CMD=/usr/bin/omelet_glacier_uploader.py
+BACKUP_CMD_OPT="--vault dcs-confluence"
+
+for i in `find $BACKUP_DIR -type f`
+do
+$BACKUP_CMD $BACKUP_CMD_OPT $i
+done
