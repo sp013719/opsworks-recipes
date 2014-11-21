@@ -1,4 +1,5 @@
-python_pip " " do
-    options "-e git+https://github.com/TrendMicroDCS/omelet.git@dcs-hybridcloud#egg=omelet"
-    action :install
+execute "pip" do
+    command "/usr/bin/pip git+https://github.com/TrendMicroDCS/omelet.git@dcs-hybridcloud#egg=omelet"
+    user :root
+    action :run
 end
