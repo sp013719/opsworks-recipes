@@ -14,12 +14,11 @@ template 'tomcat server configuration for Omnibus' do
 	owner	'tomcat'
 	group	'tomcat'
 	mode	0640
-	variables (
-		:resource_name => node['opsworks_java']['datasources']['root'],
+	variables ({
 		:resource_name => node['opsworks_java']['datasources']['root'],
 		:application => 'root',
 		:driver_class => driver_class
-	)
+	})
 	notifies :restart, 'tomcat'
 end
 
