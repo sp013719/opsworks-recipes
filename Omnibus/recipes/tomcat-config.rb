@@ -1,4 +1,4 @@
-driver_class = case deploy[:database][:type]
+driver_class = case node[:deploy]['root'][:database][:type]
   when "mysql"
     'com.mysql.jdbc.Driver'
   when "postgresql"
