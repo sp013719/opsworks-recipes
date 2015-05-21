@@ -1,8 +1,4 @@
-service 'tomcat' do
-	service_name 'tomcat7'
-	supports :restart => true, :reload => true, :status => true
-	action :nothing
-end
+include_recipe "Omnibus::tomcat-service"
 
 driver_class = case node[:deploy]['root'][:database][:type]
   when "mysql"
