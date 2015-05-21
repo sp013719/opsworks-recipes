@@ -1,3 +1,9 @@
+service 'tomcat' do
+	service_name 'tomcat7'
+	supports :restart => true, :reload => true, :status => true
+	action :nothing
+end
+
 driver_class = case node[:deploy]['root'][:database][:type]
   when "mysql"
     'com.mysql.jdbc.Driver'
@@ -9,7 +15,7 @@ driver_class = case node[:deploy]['root'][:database][:type]
 
 
 template 'tomcat server configuration for Omnibus' do
-	path	'/etc/tomcat7.0/Catalina/localhost/ROOT.xml'
+	path	'/etc/tomcat7/Catalina/localhost/ROOT.xml'
 	source 	'tomcat-context.xml.erb'
 	owner	'tomcat'
 	group	'tomcat'
