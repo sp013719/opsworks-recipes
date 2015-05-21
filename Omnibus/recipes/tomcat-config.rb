@@ -1,4 +1,8 @@
-include_recipe "Omnibus::tomcat-service"
+service 'tomcat' do
+    service_name 'tomcat7'
+    supports :restart => true, :reload => true, :status => true
+    action :nothing
+end
 
 driver_class = case node[:deploy]['root'][:database][:type]
   when "mysql"
@@ -21,6 +25,6 @@ template 'tomcat server configuration for Omnibus' do
 		:application => 'root',
 		:driver_class => driver_class
 	})
-	notifies :restart, "service['tomcat']"
+	notifies :restart, 'service[tomcat]'
 end
 
