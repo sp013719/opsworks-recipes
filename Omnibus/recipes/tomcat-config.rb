@@ -13,8 +13,9 @@ template 'tomcat server configuration for Omnibus' do
 	source 	'tomcat-context.xml.erb'
 	owner	'tomcat'
 	group	'tomcat'
-	mode	'0640'
+	mode	0640
 	variables (
+		:resource_name => node['opsworks_java']['datasources']['root'],
 		:resource_name => node['opsworks_java']['datasources']['root'],
 		:application => 'root',
 		:driver_class => driver_class
