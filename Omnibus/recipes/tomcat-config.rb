@@ -19,6 +19,6 @@ template 'tomcat server configuration for Omnibus' do
 		:application => 'root',
 		:driver_class => driver_class
 	})
-	notifies :restart, 'tomcat'
+	notifies :restart, "service['tomcat']"
 end
 
