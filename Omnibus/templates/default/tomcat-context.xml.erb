@@ -5,6 +5,6 @@
             validationQuery="SELECT 1" testOnBorrow="true"
             removeAbandoned="true" removeAbandonedTimeout="30"
             driverClassName="<%= @driver_class %>"
-            url="jdbc:<%= node['deploy'][@application]['database']['type'] %>:<%= node['deploy'][@application]['database']['host'] %>:<%= node['deploy'][@application]['database']['port'] %>/<%= node['deploy'][@application]['database']['database'] %>"
+            url="jdbc:<%= node['deploy'][@application]['database']['type'] %>://<%= node['deploy'][@application]['database']['host'] %>:<%= node['deploy'][@application]['database']['port'] %>/<%= node['deploy'][@application]['database']['database'] %>"
             factory="org.apache.commons.dbcp.BasicDataSourceFactory" />
 </Context>
