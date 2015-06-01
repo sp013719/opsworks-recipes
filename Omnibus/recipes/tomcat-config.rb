@@ -4,27 +4,16 @@ service 'tomcat' do
     action :nothing
 end
 
-driver_class = case node[:deploy]['root'][:database][:type]
-  when "mysql"
-    'com.mysql.jdbc.Driver'
-  when "postgresql"
-    'org.postgresql.Driver'
-  else
-    ''
-  end
-
-
-template 'tomcat server configuration for Omnibus' do
-	path	'/etc/tomcat7/Catalina/localhost/ROOT.xml'
-	source 	'tomcat-context.xml.erb'
-	owner	'tomcat'
-	group	'tomcat'
-	mode	0640
-	variables ({
-		:resource_name => node['opsworks_java']['datasources']['root'],
-		:application => 'root',
-		:driver_class => driver_class
-	})
+bash 'tomcat-resource-config' do
+	user 'root'
+	cwd '/etc/tomcat7/Catalina/localhost/'
+	code <<-EOH
+	LineNum=$(grep -n "maxActive" ROOT.xml | awk 'BEGIN {FS=":"} {print $1}')
+	sed -i '${LineNum}c \\            maxActive=\"30\" maxIdle=\"5\" maxWait=\"1000\"' ROOT.xml
+	sed -i '${LineNum}a \\            validationQuery=\"SELECT 1\" testOnBorrow=\"true\"' ROOT.xml
+	sed -i '${LineNum+1}a \\            removeAbandoned=\"true\" removeAbandonedTimeout=\"30\"' ROOT.xml
+	chown tomcat ROOT.xml
+	EOH
 	notifies :restart, 'service[tomcat]'
 end
 
