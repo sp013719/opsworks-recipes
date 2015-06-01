@@ -38,7 +38,7 @@ bash 'tomcat-resource-config' do
 	sed -i "7i \            removeAbandoned=\"true\" removeAbandonedTimeout=\"30\"" ROOT.xml
 	ls -al ROOT.xml
 	chown tomcat ROOT.xml
-	chgrp ROOT.xml
+	chgrp tomcat ROOT.xml
 	EOH
 	notifies :restart, 'service[tomcat]'
 end
