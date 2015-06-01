@@ -1,7 +1,4 @@
 <Context>
-  <% @environment.each do |key, value| %>
-  <Environment name="<%= key %>" value="<%= value %>" type="java.lang.String" />
-  <% end %>
   <Resource name="<%= @resource_name %>" auth="Container" type="javax.sql.DataSource"
             maxActive="30" maxIdle="5" maxWait="1000"
             username="<%= node['deploy'][@application]['database']['username'] %>" password="<%= node['deploy'][@application]['database']['password'] %>"
