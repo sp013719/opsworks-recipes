@@ -30,12 +30,16 @@ end
 
 
 bash 'tomcat-resource-config' do
-	user 'tomcat'
+	user 'root'
 	cwd '/etc/tomcat7/Catalina/localhost/'
 	code <<-EOH
 	sed -i "5c \            maxActive=\"30\" maxIdle=\"5\" maxWait=\"1000\"" ROOT.xml
 	sed -i "6i \            validationQuery=\"SELECT 1\" testOnBorrow=\"true\"" ROOT.xml
 	sed -i "7i \            removeAbandoned=\"true\" removeAbandonedTimeout=\"30\"" ROOT.xml
+	ls -al ROOT.xml
+	chown tomcat ROOT.xml
+	chgrp ROOT.xml
 	EOH
+	notifies :restart, 'service[tomcat]'
 end
 
