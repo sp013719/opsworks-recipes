@@ -1,0 +1,64 @@
+#!/bin/sh
+
+AWS_CMD="aws opsworks --region us-east-1"
+OPSWORKS_CMD="opsworks-agent-cli get_json"
+JQ="jq --raw-output"
+
+
+function get_stack_id (){
+	$OPSWORKS_CMD | $JQ '.["opsworks"]["stack"]["id"]'
+}
+
+function get_layer_id (){
+	$OPSWORKS_CMD | $JQ ".[\"opsworks\"][\"layers\"][\"$1\"][\"id\"]"
+}
+
+function get_app_id (){
+	$AWS_CMD describe-apps --stack-id $1 | $JQ ".Apps[] | select(.Name == \"$2\") | .AppId"
+}
+
+function exec_deploy (){
+	$AWS_CMD create-deployment --stack-id $1 --app-id $2 --command "{\"Name\":\"deploy\"}"
+}
+
+
+# input parameter check
+if [ $# -ne 2 ]
+then
+	echo "$0 layer_name app_name"
+	exit 1
+fi
+LAYER_NAME=$1
+APP_NAME=$2
+
+
+# find stack id
+STACK_ID=`get_stack_id`
+if [ -z $STACK_ID ]
+then
+	echo "can't find stack id"
+	exit 1
+fi
+
+
+# find layer_id
+LAYER_ID=`get_layer_id $LAYER_NAME`
+if [ $LAYER_ID == null ]
+then
+	echo "can't find layer_name $LAYER_NAME"
+	exit 1
+fi
+
+
+# find app_id
+APP_ID=`get_app_id $STACK_ID $APP_NAME`
+if [ -z $APP_ID ]
+then
+	echo "can't find app_name $APP_NAME"
+	exit 1
+fi
+
+
+# perform deploy
+echo "start to deploy for stack:$STACK_ID app:$APP_ID"
+exec_deploy $STACK_ID $APP_ID
