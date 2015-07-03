@@ -16,7 +16,7 @@ file "/root/ba_file" do
 	owner 'root'
 	group 'root'
 	mode '0600'
-	content node['ba']['password']+","+node['ba']['account']+","+node['ba']['uid']
+	content "#{node['ba']['password']},#{node['ba']['account']},#{node['ba']['uid']}"
 	action :create
 end
 
