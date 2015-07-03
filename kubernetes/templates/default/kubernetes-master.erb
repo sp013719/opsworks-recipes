@@ -43,8 +43,8 @@ start() {
 	daemon $prog apiserver \
 	--service-cluster-ip-range=${CLUSTER_IP_RANGE} \
 	--insecure-port=8080 \
-    --secure-port=6443 \
-    --basic-auth-file="<% @ba_path %>" \
+	--secure-port=6443 \
+	--basic-auth-file="<%= @ba_path %>" \
 	--address=0.0.0.0 \
 	--etcd_servers=${ETCD_SERVERS} \
 	--cluster_name=${CLUSTER_NAME} \
