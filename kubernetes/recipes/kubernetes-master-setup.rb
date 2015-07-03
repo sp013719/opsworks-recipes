@@ -7,7 +7,7 @@ if my_etcd_elb = node[:opsworks][:stack]['elb-load-balancers'].select{|elb| elb[
       variables({
 		:etcd_url => my_etcd_elb[:dns_name],
 		:cluster_cidr => node['kubernetes']['cluster_cidr'],
-		:ba_path => "/root/ba_file",
+		:ba_path => "/root/ba_file"
       })
     end
 end
