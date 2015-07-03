@@ -11,8 +11,3 @@ service "codedeploy-agent" do
 	action [:enable, :start]
 end
 
-template "/usr/local/bin/opsworks_deploy.sh" do
-	mode "0755"
-	owner "root"
-	source "opsworks_deploy.sh.erb"
-end
