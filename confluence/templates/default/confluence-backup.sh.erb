@@ -3,10 +3,11 @@
 export LC_ALL=C
 
 BACKUP_DIR=/trend/atlassian/confluence-data/backups
-BACKUP_CMD=/usr/bin/omelet_glacier_uploader.py
-BACKUP_CMD_OPT="--vault dcs-confluence"
+DEST_DIR=s3://dcs-confluence/backup/
+BACKUP_CMD=/usr/bin/aws 
+BACKUP_CMD_OPT="s3 mv" 
 
 for i in `find $BACKUP_DIR -type f`
 do
-$BACKUP_CMD $BACKUP_CMD_OPT $i
+$BACKUP_CMD $BACKUP_CMD_OPT $i $DEST_DIR
 done
