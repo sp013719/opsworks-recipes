@@ -1,0 +1,15 @@
+#!/bin/sh
+
+export LC_ALL=C
+
+BACKUP_DIR=/trend/atlassian/jira-data/export
+DEST_DIR=s3://dcs-jira/backup
+BACKUP_CMD=/usr/bin/aws 
+BACKUP_CMD_OPT="s3 mv" 
+PREFIX=`opsworks-agent-cli get_json | jq --raw-output '.opsworks.stack.name' | sed s'/[ \/]/_/'g`
+
+cd $BACKUP_DIR
+for i in `ls *.zip`
+do
+$BACKUP_CMD $BACKUP_CMD_OPT ${i} $DEST_DIR/${PREFIX}_${i}
+done
