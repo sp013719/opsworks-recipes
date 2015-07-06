@@ -27,7 +27,7 @@ hostname=`hostname`
 logfile=/var/log/kubernetes.log
 
 CLUSTER_NAME=my-happy-cluster
-ETCD_SERVERS="http://<%= @etcd_url %>:80"
+ETCD_SERVERS="http://<%= @etcd_ba_account %>:<%= @etcd_ba_password %>@<%= @etcd_url %>:80"
 CLUSTER_IP_RANGE="<%= @cluster_cidr %>"
 MASTER="127.0.0.1:8080"
 
