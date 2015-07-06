@@ -9,7 +9,7 @@ if my_etcd_elb = node[:opsworks][:stack]['elb-load-balancers'].select{|elb| elb[
 		:cluster_cidr => node['kubernetes']['cluster_cidr'],
 		:ba_path => "/root/ba_file",
 		:etcd_ba_account => "root",
-		:etcd_ba_password => node['ba']['password']
+		:etcd_ba_password => node['etcd_password']
       })
     end
 end
