@@ -24,11 +24,12 @@ end
 
 bash 'ba_setup' do
 	user 'root'
+	cmd '/tmp'
 	code <<-EOH
-	curl -X PUT -d "{\"user\":\"root\",\"password\":\"#{node['etcd_password']}\",\"roles\":[\"root\"]}" http://localhost:4001/v2/auth/users/root
-	curl -X PUT http://localhost:4001/v2/auth/enable
+	curl -X PUT -d "{\"user\":\"root\",\"password\":\"#{node['etcd_password']}\",\"roles\":[\"root\"]}" http://localhost:4001/v2/auth/users/root > ba_log
+	curl -X PUT http://localhost:4001/v2/auth/enable >> ba_log
 	AUTHSTR=$(echo -n "root:#{node['etcd_password']}" | base64)
-	curl -H "Authorization: Basic $AUTHSTR" -X PUT -d "{\"role\":\"guest\",\"revoke\":{\"kv\":{\"read\":[\"*\"],\"write\":[\"*\"]}}}" http://localhost:4001/v2/auth/roles/guest
+	curl -H "Authorization: Basic $AUTHSTR" -X PUT -d "{\"role\":\"guest\",\"revoke\":{\"kv\":{\"read\":[\"*\"],\"write\":[\"*\"]}}}" http://localhost:4001/v2/auth/roles/guest >> ba_log
 	EOH
 end
 
