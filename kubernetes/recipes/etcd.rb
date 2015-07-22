@@ -24,7 +24,7 @@ end
 
 bash 'ba_setup' do
 	user 'root'
-	cmd '/tmp'
+	cwd '/tmp'
 	code <<-EOH
 	curl -X PUT -d "{\"user\":\"root\",\"password\":\"#{node['etcd_password']}\",\"roles\":[\"root\"]}" http://localhost:4001/v2/auth/users/root > ba_log
 	curl -X PUT http://localhost:4001/v2/auth/enable >> ba_log
