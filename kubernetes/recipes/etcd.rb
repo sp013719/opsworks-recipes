@@ -20,7 +20,7 @@ end
 service "etcd" do
 	action [:enable, :start]
 	subscribes :reload, "template[/etc/init.d/etcd]", :immediately
-	notifies :run, "bash[ba_setup]", :immediately
+	notifies :run, "bash[ba_setup]", :delayed
 end
 
 bash 'ba_setup' do
