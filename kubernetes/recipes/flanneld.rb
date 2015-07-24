@@ -16,7 +16,10 @@ if my_etcd_elb = node[:opsworks][:stack]['elb-load-balancers'].select{|elb| elb[
       mode "0755"
       owner "root"
       source "flanneld.erb"
-      variables :elb_url => my_etcd_elb[:dns_name]
+      variables ({
+		:elb_url => my_etcd_elb[:dns_name],
+		:etcd_password => node[:etcd_password]
+	  })
       notifies :disable, 'service[flanneld]', :delayed
     end
 end
