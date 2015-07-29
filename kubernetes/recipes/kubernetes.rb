@@ -1,9 +1,8 @@
 bash 'install_kubernetes' do
   user 'root'
   cwd '/tmp'
-  #wget https://github.com/GoogleCloudPlatform/kubernetes/releases/download/v0.18.2/kubernetes.tar.gz
   code <<-EOH
-  wget https://github.com/GoogleCloudPlatform/kubernetes/releases/download/v0.20.2/kubernetes.tar.gz
+  wget https://github.com/GoogleCloudPlatform/kubernetes/releases/download/v1.0.1/kubernetes.tar.gz
   tar zxvf kubernetes.tar.gz
   cd kubernetes/server
   tar zxvf kubernetes-server-linux-amd64.tar.gz
