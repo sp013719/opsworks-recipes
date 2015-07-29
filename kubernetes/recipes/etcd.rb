@@ -2,9 +2,9 @@ bash 'install_etcd' do
   user 'root'
   cwd '/tmp'
   code <<-EOH
-  wget --max-redirect 255 https://github.com/coreos/etcd/releases/download/v2.1.1/etcd-v2.1.1-linux-amd64.tar.gz
-  tar zxvf etcd-v2.1.0-rc.0-linux-amd64.tar.gz
-  cd etcd-v2.1.0-rc.0-linux-amd64
+  wget --max-redirect 255 -O etcd.tar.gz https://github.com/coreos/etcd/releases/download/v2.1.1/etcd-v2.1.1-linux-amd64.tar.gz
+  tar zxvf etcd.tar.gz
+  cd etcd
   cp etcd etcdctl /usr/local/bin
   EOH
 end
