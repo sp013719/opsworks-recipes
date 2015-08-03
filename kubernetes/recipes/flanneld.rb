@@ -2,9 +2,9 @@ bash 'install_flannel' do
   user 'root'
   cwd '/tmp'
   code <<-EOH
-  wget --max-redirect 255 https://github.com/coreos/flannel/releases/download/v0.4.1/flannel-0.4.1-linux-amd64.tar.gz
-  tar zxvf flannel-0.4.1-linux-amd64.tar.gz
-  cd flannel-0.4.1
+  wget --max-redirect 255 https://github.com/coreos/flannel/releases/download/v0.5.2/flannel-0.5.2-linux-amd64.tar.gz
+  tar zxvf flannel-0.5.2-linux-amd64.tar.gz
+  cd flannel-0.5.2
   cp flanneld /usr/local/bin
   EOH
 end
