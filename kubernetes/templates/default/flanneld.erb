@@ -29,6 +29,7 @@ start() {
 	echo -n $"Starting $prog: "
 	daemon $prog \
 		--etcd-endpoints=http://root:<%= @etcd_password %>@<%= @elb_url %> \
+		-ip-masq=true \
 		> /var/log/flanneld.log 2>&1 &
 	RETVAL=$?
 	echo
