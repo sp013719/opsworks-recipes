@@ -33,9 +33,9 @@ node[:deploy].each do |application, deploy|
         docker rm #{deploy[:application]}
         sleep 3
       fi
-      if docker images | grep #{deploy[:application]}; 
+      if docker images | grep #{deploy[:environment_variables][:image]}; 
       then
-        docker rmi #{deploy[:application]}
+        docker rmi #{deploy[:environment_variables][:image]}
       fi
     EOH
   end
