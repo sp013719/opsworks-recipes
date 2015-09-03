@@ -30,7 +30,7 @@ start() {
 	# Start daemon.
 	echo $"Starting kubelet: "
 	daemon $prog kubelet \
-		--api_servers=<%= @master_url %> \
+		--api_servers=http://<%= @master_url %>:8080 \
 		--v=2 \
 		--address=0.0.0.0 \
 		--enable_server \
@@ -39,7 +39,7 @@ start() {
 
 	echo $"Starting proxy: "
 	daemon $prog proxy \
-		--master=<%= @master_url %> \
+		--master=http://<%= @master_url %>:8080 \
 		--v=2 \
 		> ${logfile} 2>&1 &
 
