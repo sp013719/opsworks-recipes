@@ -20,7 +20,7 @@ template "/root/etcd_static_bootstrap.sh" do
 end
 
 service 'etcd' do
-    action :nothing
+	action :nothing
 	notifies :run, "bash[etcd_bootstrap]", :delayed
 end
 
