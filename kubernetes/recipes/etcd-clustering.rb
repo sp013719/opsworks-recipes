@@ -1,7 +1,3 @@
-service 'etcd' do
-    action :stop
-end
-
 private_ip = node['opsworks']['instance']['private_ip']
 hostname = node['opsworks']['instance']['hostname']
 members = Array.new
@@ -20,6 +16,11 @@ template "/root/etcd_static_bootstrap.sh" do
 		:private_ip => private_ip,
 		:token_postfix => node[:token]
 	})
+	notifies :stop, "service[etcd]", :delayed
+end
+
+service 'etcd' do
+    action :nothing
 	notifies :run, "bash[etcd_bootstrap]", :delayed
 end
 
@@ -30,4 +31,5 @@ bash 'etcd_bootstrap' do
 	rm -rf #{hostname}.etcd
 	./etcd_static_bootstrap.sh
 	EOH
+	action :nothing
 end
