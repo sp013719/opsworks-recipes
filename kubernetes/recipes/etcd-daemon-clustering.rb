@@ -15,7 +15,7 @@ bash "update_new_setting" do
 	user 'root'
 	cwd '/etc/init.d'
 	code <<-EOH
-	sed -i '33c ///t//t-initial-advertise-peer-urls http://#{private_ip}:7001 -listen-peer-urls http://#{private_ip}:7001 -listen-client-urls http://#{private_ip}:4001,http://127.0.0.1:4001 -advertise-client-urls http://#{private_ip}:4001 -initial-cluster-token etcd-cluster-#{node[:token]} -initial-cluster #{members.join(',')} -initial-cluster-state new ///' etcd
+	sed -i '33c \\\t\\\t-initial-advertise-peer-urls http://#{private_ip}:7001 -listen-peer-urls http://#{private_ip}:7001 -listen-client-urls http://#{private_ip}:4001,http://127.0.0.1:4001 -advertise-client-urls http://#{private_ip}:4001 -initial-cluster-token etcd-cluster-#{node[:token]} -initial-cluster #{members.join(',')} -initial-cluster-state new \\\' etcd
 	EOH
 	action :nothing
 	notifies :start, "service[etcd]", :delayed
