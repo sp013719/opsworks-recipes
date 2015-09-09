@@ -4,7 +4,7 @@ hostname = node['opsworks']['instance']['hostname']
 instances = Array.new
 
 node['opsworks']['layers']['kub-minion']['instances'].each do |inst|
-	instances << inst[0] inst[1][:private_ip]
+	instances << inst[0]  + " " + inst[1][:private_ip]
 end
 
 template "/root/haproxy" do
