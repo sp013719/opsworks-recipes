@@ -27,8 +27,8 @@ backend <%= service[:name] %>-service
     option forwardfor
     <% service[:ip].each_with_index do |ip, index| -%>
    	    server kubninion<%= index %> <%= ip %>:<%= service[:port] %> check
-    <% end %>
-<% end %>
+    <% end -%>
+<% end -%>
 
 listen stats :8081
     mode http
