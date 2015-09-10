@@ -14,19 +14,18 @@ defaults
     timeout client 30s
 
 <% node['haproxy'].each do |service| -%>
-    <% unless node.empty? -%>
-frontend <%= service[:name] %>
-    bind *:<%= service[:port] %>
-    mode http
-    option httpclose
-    default_backend <%= service[:name] %>-service
+    frontend <%= service[:name] %>
+        bind *:<%= service[:port] %>
+        mode http
+        option httpclose
+        default_backend <%= service[:name] %>-service
 
-backend <%= service[:name] %>-service
-    balance roundrobin
-    option httpclose
-    option forwardfor
+    backend <%= service[:name] %>-service
+        balance roundrobin
+        option httpclose
+        option forwardfor
     <% @instances.each do |instance| -%>
-	    <%= server #{instance}:#{service[:port]} =%>
+	    server <%= instance %>:<%= service[:port] %>
     <% end -%>
 <% end -%>
 
