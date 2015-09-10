@@ -7,6 +7,11 @@ node['opsworks']['layers']['kub-minion']['instances'].each do |inst|
 	instances << inst[0]  + " " + inst[1][:private_ip]
 end
 
+directory "/root/haproxy" do
+  owner root
+  group root
+end
+
 template "/root/haproxy/haproxy.cfg" do
   source "haproxy.erb"
   variables({
