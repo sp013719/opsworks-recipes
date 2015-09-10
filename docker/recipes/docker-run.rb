@@ -42,13 +42,18 @@ node[:deploy].each do |application, deploy|
   
   dockerenvs = " "
   deploy[:environment_variables].each do |key, value|
-    dockerenvs=dockerenvs+" -e "+key+"="+value
+    dockerenvs = dockerenvs + " -e " + key + "=" + value
+  end
+
+  dockervolume = " "
+  if deploy[:environment_variables][:host_volume]
+	dockervolume = " -v " + deploy[:environment_variables][:host_volume] + ":" + deploy[:environment_variables][:container_volume]
   end
   
   bash "docker-run" do
     user "root"
     code <<-EOH
-      docker run #{dockerenvs} -p #{node[:opsworks][:instance][:private_ip]}:#{deploy[:environment_variables][:service_port]}:#{deploy[:environment_variables][:container_port]} --name #{deploy[:application]} -d #{deploy[:environment_variables][:image]}
+      docker run #{dockerenvs} #{dockervolume} -p #{node[:opsworks][:instance][:private_ip]}:#{deploy[:environment_variables][:service_port]}:#{deploy[:environment_variables][:container_port]} --name #{deploy[:application]} -d #{deploy[:environment_variables][:image]}
     EOH
   end
 
