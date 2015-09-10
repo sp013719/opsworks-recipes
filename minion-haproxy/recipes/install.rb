@@ -10,6 +10,9 @@ end
 template "/root/haproxy" do
   source "haproxy.erb"
   variables({
-	:instances => instances
+	:instances => instances,
+	:services => node["haproxy"]["services"],
+	:username => node["haproxy"]["username"],
+	:password => node["haproxy"]["password"]
   })
 end
