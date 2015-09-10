@@ -8,8 +8,8 @@ node['opsworks']['layers']['kub-minion']['instances'].each do |inst|
 end
 
 directory "/root/haproxy" do
-  owner root
-  group root
+  owner "root"
+  group "root"
 end
 
 template "/root/haproxy/haproxy.cfg" do
