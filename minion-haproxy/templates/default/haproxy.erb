@@ -12,6 +12,7 @@ defaults
     timeout server 30s
     timeout connect 30s
     timeout client 30s
+    monitor-uri /index.html
 
 <% node['haproxy']['services'].each do |service| -%>
 frontend <%= service[:name] %>
