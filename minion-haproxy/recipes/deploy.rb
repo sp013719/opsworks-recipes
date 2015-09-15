@@ -1,5 +1,5 @@
 include_recipe 'deploy'
-
+Chef::Log.info("Start!!")
 node[:deploy].each do |application, deploy|
   
   if node[:opsworks][:instance][:layers].first != deploy[:environment_variables][:layer]
@@ -54,7 +54,7 @@ node[:deploy].each do |application, deploy|
   node[:haproxy][:services].each do |service|
         externalports = externalports + " -p " + service[:port] + ":" + service[:port]
   end
-
+  Chef::Log.info("Mehhh")
   bash "docker-run" do
     user "root"
     code <<-EOH
