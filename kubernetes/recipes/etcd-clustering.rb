@@ -1,13 +1,12 @@
 private_ip = node['opsworks']['instance']['private_ip']
 hostname = node['opsworks']['instance']['hostname']
 members = Array.new
-smallest_ip = 255
+ip_enable_ba = nil
 
 node['opsworks']['layers']['etcd']['instances'].each do |inst|
 	members << inst[0]+"=http://"+inst[1][:private_ip]+":7001"
-	last_num = inst[1][:private_ip].split('.')[3]
-	if last_num.to_i < smallest_ip
-		smallest_ip = last_num.to_i
+	if ip_enable_ba == nil
+		ip_enable_ba = inst[1][:private_ip]
 	end
 end
 
@@ -39,7 +38,7 @@ bash 'etcd_bootstrap' do
 	action :nothing
 end
 
-if private_ip.split('.')[3].to_i == smallest_ip
+if private_ip == ip_enable_ba
 	template "/root/etcd_enable_ba.sh" do
 	    mode "0755"
 	    owner "root"
