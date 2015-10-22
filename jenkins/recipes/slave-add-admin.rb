@@ -25,4 +25,12 @@ directory '/media/ephemeral0/jenkins' do
     recursive true
 end
 
+#put cron job
+
+template "/etc/cron.daily/docker-clean.sh" do
+    mode "0755"
+    owner "root"
+    source "docker-clean.sh.erb"
+end
+
 Chef::Log.info("***************** Jenkins slave configure finished **************")
