@@ -1,4 +1,4 @@
-include_recipe "slave-setup"
+include_recipe "jenkins::slave-setup"
 
 bash 'docker-login' do
 	user 'jenkins'
