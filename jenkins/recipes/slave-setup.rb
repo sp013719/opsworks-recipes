@@ -38,8 +38,10 @@ bash 'install-docker' do
 end
 
 #put cron job
-file
-
-
+template "/etc/cron.daily/docker-clean.sh" do
+      mode "0755"
+      owner "root"
+      source "docker-clean.sh.erb"
+end
 
 Chef::Log.info("***************** Jenkins slave setup finished **************")
