@@ -1,3 +1,5 @@
+include_recipe "slave-setup"
+
 bash 'docker-login' do
 	user 'jenkins'
 	cwd '/home/jenkins'
