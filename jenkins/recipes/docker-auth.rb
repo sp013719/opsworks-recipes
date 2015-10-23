@@ -1,5 +1,7 @@
-execute 'docker-login' do
+bash 'docker-login' do
 	user 'jenkins'
 	cwd '/home/jenkins'
-	command "docker login -u #{node['docker-registry']['username']} -p #{node['docker-registry']['password']} -e yoyo@trend.com dcsrd-docker-registry.trendmicro.com"
+	code <<-EOH
+	docker login -u #{node['docker-registry']['username']} -p #{node['docker-registry']['password']} -e yoyo@trend.com dcsrd-docker-registry.trendmicro.com
+	EOH
 end
