@@ -5,7 +5,7 @@ service 'Jenkins' do
 end
 
 bash 'install github plugin' do
-	user 'jenkins'
+	user 'root'
 	code <<-EOH
 	cd /var/lib/jenkins/plugins
 	wget http://updates.jenkins-ci.org/download/plugins/github-api/1.68/github-api.hpi
@@ -25,7 +25,8 @@ bash 'install github plugin' do
 	wget http://updates.jenkins-ci.org/download/plugins/async-http-client/1.7.8/async-http-client.hpi
 	wget http://updates.jenkins-ci.org/download/plugins/durable-task/1.5/durable-task.hpi
 	wget http://updates.jenkins-ci.org/download/plugins/external-monitor-job/1.4/external-monitor-job.hpi
-
+    chown jenkins *.hpi
+	chgrp jenkins *.hpi
 	EOH
 	notifies :restart, 'service[Jenkins]'
 end
