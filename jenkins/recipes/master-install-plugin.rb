@@ -25,7 +25,7 @@ bash 'install github plugin' do
 	wget http://updates.jenkins-ci.org/download/plugins/async-http-client/1.7.8/async-http-client.hpi
 	wget http://updates.jenkins-ci.org/download/plugins/durable-task/1.5/durable-task.hpi
 	wget http://updates.jenkins-ci.org/download/plugins/external-monitor-job/1.4/external-monitor-job.hpi
-    chown jenkins *.hpi
+	chown jenkins *.hpi
 	chgrp jenkins *.hpi
 	EOH
 	notifies :restart, 'service[Jenkins]'
