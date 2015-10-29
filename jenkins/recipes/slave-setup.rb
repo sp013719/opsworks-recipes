@@ -31,8 +31,6 @@ bash 'install-docker' do
 	yum -y install docker
 	service docker start
 	usermod -aG docker jenkins
-	echo "# /etc/sysconfig/docker" > /etc/sysconfig/docker
-	echo 'other_args="--insecure-registry dcsrd-docker-registry.trendmicro.com"' >> /etc/sysconfig/docker
 	service docker restart
 	EOH
 end
