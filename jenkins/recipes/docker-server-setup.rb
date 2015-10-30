@@ -18,7 +18,7 @@ bash 'install-docker' do
 	sed -i '9c OPTIONS="--default-ulimit nofile=1024:4096 -H tcp://0.0.0.0:4243 -H unix:///var/run/docker.sock"' /etc/sysconfig/docker
 	service docker restart
 	EOH
-	notifies :start, 'bash[setup-slave-image]'
+	notifies :run, 'bash[setup-slave-image]'
 end
 
 #put cron job
