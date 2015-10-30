@@ -33,7 +33,7 @@ bash 'setup-slave-image' do
 	code <<-EOH
 	docker pull philpep/jenkins-slave:jessie
 	EOH
-	action :stop
+	action :nothing
 end
 
 Chef::Log.info("***************** Jenkins docker server setup finished **************")
