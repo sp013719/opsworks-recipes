@@ -1,0 +1,42 @@
+global
+    log 127.0.0.1   local0
+    log 127.0.0.1   local1 notice
+
+defaults
+    log     global
+    mode    http
+    option  httplog
+    option  dontlognull
+    option forwardfor
+    option http-server-close
+    timeout server 30s
+    timeout connect 30s
+    timeout client 30s
+    monitor-uri /index.html
+
+<% node['haproxy']['services'].each do |service| -%>
+frontend <%= service[:name] %>
+    bind *:<%= service[:port] %>
+    mode http
+    option httpclose
+    default_backend <%= service[:name] %>-service
+
+backend <%= service[:name] %>-service
+    balance roundrobin
+    option httpclose
+    option forwardfor
+    <% @instances.each do |instance| -%>
+    server <%= instance %>:<%= service[:port] %> check
+    <% end -%>
+
+<% end -%>
+
+listen stats :8081
+    mode http
+    stats enable
+    stats hide-version
+    stats realm Haproxy\ Statistics
+    stats uri /
+    stats auth <%= @username %>:<%= @password %>
+    stats refresh 10s
+

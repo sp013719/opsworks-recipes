@@ -1,5 +1,5 @@
 include_recipe 'deploy'
-
+Chef::Log.info("Start!!")
 node[:deploy].each do |application, deploy|
   
   if node[:opsworks][:instance][:layers].first != deploy[:environment_variables][:layer]
@@ -33,7 +33,10 @@ node[:deploy].each do |application, deploy|
         docker rm #{deploy[:application]}
         sleep 3
       fi
-      docker rmi #{deploy[:environment_variables][:image]} || true
+      if docker images | grep #{deploy[:environment_variables][:image]}; 
+      then
+        docker rmi #{deploy[:environment_variables][:image]}
+      fi
     EOH
   end
   
@@ -47,10 +50,15 @@ node[:deploy].each do |application, deploy|
 	dockervolume = " -v " + deploy[:environment_variables][:host_volume] + ":" + deploy[:environment_variables][:container_volume]
   end
   
+  externalports = " "
+  node[:haproxy][:services].each do |service|
+        externalports = externalports + " -p " + service[:port] + ":" + service[:port]
+  end
+  Chef::Log.info("Mehhh")
   bash "docker-run" do
     user "root"
     code <<-EOH
-      docker run #{dockerenvs} #{dockervolume} -p #{node[:opsworks][:instance][:private_ip]}:#{deploy[:environment_variables][:service_port]}:#{deploy[:environment_variables][:container_port]} --name #{deploy[:application]} -d #{deploy[:environment_variables][:image]}
+      docker run #{dockerenvs} #{dockervolume} #{externalports} -p #{node[:opsworks][:instance][:private_ip]}:#{deploy[:environment_variables][:service_port]}:#{deploy[:environment_variables][:container_port]} --name #{deploy[:application]} -d #{deploy[:environment_variables][:image]}
     EOH
   end
 
