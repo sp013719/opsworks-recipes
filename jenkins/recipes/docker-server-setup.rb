@@ -14,7 +14,7 @@ bash 'install-docker' do
 	yum -y install docker
 	wget https://get.docker.com/builds/Linux/x86_64/docker-1.8.3
 	chmod 700 docker-1.8.3
-    mv docker-1.8.3 /usr/bin/docker -f
+	mv docker-1.8.3 /usr/bin/docker -f
 	sed -i '9c OPTIONS="--default-ulimit nofile=1024:4096 -H tcp://0.0.0.0:4243 -H unix:///var/run/docker.sock"' /etc/sysconfig/docker
 	service docker restart
 	EOH
