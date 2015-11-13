@@ -1,2 +1,2 @@
 source "https://supermarket.getchef.com"
-cookbook 'aws', '~> 2.5.0'
+cookbook 'aws', '~> 2.7.2'
