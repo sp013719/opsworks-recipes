@@ -17,7 +17,8 @@ node[:deploy].each do |application, deploy|
     deploy_data deploy
     app application
   end
-
+  
+  Chef::Log.info("Cleaning up... #{deploy[:application]}")
   bash "docker-cleanup" do
     user "root"
     code <<-EOH
