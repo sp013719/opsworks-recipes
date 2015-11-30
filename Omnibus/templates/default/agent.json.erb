@@ -1,0 +1,15 @@
+{
+  "cloudwatch.emitMetrics": true,
+  "kinesis.endpoint": "",
+  "firehose.endpoint": "",
+  "awsAccessKeyId": "<%= @kinesis_access_key %>",
+  "awsSecretAccessKey": "<%= @kinesis_secret_key %>",
+  
+  "flows": [
+    {
+      "filePattern": "/usr/share/tomcat7/logs/catalina.out",
+      "kinesisStream": "<%= @kinesis_stream %>",
+      "partitionKeyOption": "RANDOM"
+    }
+  ]
+}
