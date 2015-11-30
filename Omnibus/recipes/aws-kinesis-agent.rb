@@ -21,7 +21,8 @@ template "/etc/aws-kinesis/agent.json" do
   variables({
 	:kinesis_access_key => node[:deploy]['root'][:environment_variables][:KINESIS_ACCESS_KEY],
 	:kinesis_secret_key => node[:deploy]['root'][:environment_variables][:KINESIS_SECRET_KEY],
-	:kinesis_stream => node[:deploy]['root'][:environment_variables][:KINESIS_STREAM]
+	:kinesis_stream_name => node[:deploy]['root'][:environment_variables][:KINESIS_STREAM_NAME],
+	:kinesis_firehose_name => node[:deploy]['root'][:environment_variables][:KINESIS_FIREHOSE_NAME]
   })
   notifies :restart, 'service[aws-kinesis-agent]', :immediately
 end

@@ -8,8 +8,12 @@
   "flows": [
     {
       "filePattern": "/usr/share/tomcat7/logs/catalina.out",
-      "kinesisStream": "<%= @kinesis_stream %>",
+      "kinesisStream": "<%= @kinesis_stream_name %>",
       "partitionKeyOption": "RANDOM"
+    },
+    {
+      "filePattern": "/usr/share/tomcat7/logs/catalina.out",
+      "deliveryStream": "<%= @kinesis_firehose_name %>"
     }
   ]
 }
