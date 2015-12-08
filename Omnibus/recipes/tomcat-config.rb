@@ -16,3 +16,11 @@ bash 'tomcat-resource-config' do
 	notifies :restart, 'service[tomcat]'
 end
 
+directory '/var/log/tomcat7' do
+  mode '0775'
+  action :create
+end
+
+file '/var/log/tomcat7/catalina.out' do
+  mode '0664'
+end
