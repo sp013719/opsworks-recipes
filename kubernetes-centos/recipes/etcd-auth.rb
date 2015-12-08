@@ -1,4 +1,4 @@
-include_recipe "etcd"
+include_recipe 'kubernetes-centos::etcd'
 
 template "/root/etcd_enable_ba.sh" do
     mode "0755"
