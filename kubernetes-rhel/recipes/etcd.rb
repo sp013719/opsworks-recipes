@@ -1,7 +1,4 @@
-execute 'yum-update' do
-	command 'yum -y update'
-	notifies :install, "package[etcd]", :delayed
-end
+include_recipes 'kubernetes-rhel::repo-setup'
 
 package 'etcd' do
 	action :nothing
