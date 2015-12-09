@@ -1,2 +1,4 @@
-source "https://supermarket.getchef.com"
-cookbook 'aws', '~> 2.5.0'
+source "https://supermarket.chef.io"
+
+metadata
+cookbook "aws", "~> 2.7.2"
