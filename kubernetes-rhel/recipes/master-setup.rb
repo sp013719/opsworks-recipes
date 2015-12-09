@@ -1,6 +1,8 @@
+include_recipe 'kubernetes-rhel::repo-setup'
+
 package ['kubernetes-master', 'kubernetes-client']
 
-template "/etc/init.d/kubernetes-master" do
+template "/etc/kubelet/kubelet.conf" do
 	mode "0755"
 	owner "root"
 	source "kubernetes-master.erb"

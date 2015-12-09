@@ -1,4 +1,4 @@
-include_recipes 'kubernetes-rhel::repo-setup'
+include_recipe 'kubernetes-rhel::repo-setup'
 
 package 'etcd' do
 	action :nothing
