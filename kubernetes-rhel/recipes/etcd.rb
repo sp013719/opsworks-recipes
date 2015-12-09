@@ -6,6 +6,6 @@ package 'etcd' do
 end
 
 service "etcd" do
-	action :enable
+	action :nothing
 end
 

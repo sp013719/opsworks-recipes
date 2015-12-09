@@ -1,14 +1,16 @@
 include_recipe 'kubernetes-rhel::repo-setup'
 
+# pass private network CIDR to etcd
+#cluster_cidr => node['kubernetes']['cluster_cidr'],
+
 package ['kubernetes-master', 'kubernetes-client']
 
-template "/etc/kubelet/kubelet.conf" do
-	mode "0755"
+template "/etc/kubernetes/apiserver" do
+	mode "0600"
 	owner "root"
-	source "kubernetes-master.erb"
+	source "master-apiserver.conf.erb"
 	variables({
 		:etcd_url => node['etcd']['elb_url'],
-		:cluster_cidr => node['kubernetes']['cluster_cidr'],
 		:ba_path => "/root/ba_file",
 		:etcd_ba_account => "root",
 		:etcd_ba_password => node['etcd']['password']
@@ -23,4 +25,6 @@ file "/root/ba_file" do
 	action :create
 end
 
+# service start apiserver first
+# and then scheduler and controller-manager
 
