@@ -1,7 +1,7 @@
 include_recipe 'kubernetes-rhel::repo-setup'
 
 package 'etcd' do
-	action :nothing
+	action :install
 	notifies :start, "service[etcd]", :delayed
 end
 
