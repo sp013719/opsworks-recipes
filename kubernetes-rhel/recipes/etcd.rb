@@ -1,7 +1,20 @@
 include_recipe 'kubernetes-rhel::repo-setup'
 
+bash 'wait_a_moment' do
+	user 'root'
+	cwd '/root'
+	code <<-EOH
+    tries=0
+    while [ $tries -lt 10 ]; do
+        sleep 1
+        tries=$((tries + 1))
+    done	
+	EOH
+	notifies :install, "package[etcd]", :delayed
+end
+
 package 'etcd' do
-	action :install
+	action :nothing
 end
 
 template '/etc/etcd/etcd.conf' do
