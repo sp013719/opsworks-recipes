@@ -4,7 +4,7 @@ template "/root/etcd_enable_ba.sh" do
     mode "0755"
     owner "root"
     source "etcd_enable_ba.sh.erb"
-    variables :etcd_password => node[:etcd_password]
+    variables :etcd_password => node['etcd']['password']
     notifies :run, "bash[ba_setup]", :delayed
 end
 
