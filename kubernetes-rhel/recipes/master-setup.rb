@@ -5,7 +5,7 @@ execute 'set_flanneld_CIDR_at_ETCD' do
 	command "curl -L #{etcd_endpoint}/v2/keys/coreos.com/network/config -XPUT -d value=\"{\\\"Network\\\": \\\"#{node['kubernetes']['cluster_cidr']}\\\" }\""
 end
 
-package ['kubernetes-master', 'kubernetes-client']
+package 'kubernetes-master', 'kubernetes-client'
 
 template "/etc/kubernetes/apiserver" do
 	mode "0755"
