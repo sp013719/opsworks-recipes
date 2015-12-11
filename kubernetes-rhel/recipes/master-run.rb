@@ -4,8 +4,8 @@ end
 
 service "kube-apiserver" do
 	action :start
-	notifies :start 'service[kube-sheduler]', :delayed
-	notifies :start 'service[kube-controller-manager]', :delayed
+	notifies :start, 'service[kube-sheduler]', :delayed
+	notifies :start, 'service[kube-controller-manager]', :delayed
 end
 
 service "kube-sheduler" do
