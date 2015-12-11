@@ -10,7 +10,7 @@ template "/etc/sysconfig/flanneld" do
 	owner "root"
 	source "flanneld.erb"
 	variables ({
-		:elb_url => etcd_endpoint,
+		:elb_url => "#{etcd_endpoint}",
 	})
 	subscribes :create, "package[flannel]", :delayed
 end

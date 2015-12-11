@@ -12,7 +12,7 @@ template "/etc/kubernetes/apiserver" do
 	owner "root"
 	source "master-apiserver.conf.erb"
 	variables({
-		:etcd_server => etcd_endpoint,
+		:etcd_server => "#{etcd_endpoint}",
 		:ba_path => "/root/ba_file",
 		:cluster_cidr => node['kubernetes']['cluster_cidr'],
 		:cluster_name => "happy-k8s-cluster"
