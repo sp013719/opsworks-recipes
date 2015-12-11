@@ -3,12 +3,7 @@ include_recipe 'kubernetes-rhel::repo-setup'
 bash 'wait_a_moment' do
 	user 'root'
 	code <<-EOH
-    tries=0
-    while [ $tries -lt 10 ]; do
-        sleep 1
-        tries=$((tries + 1))
-    done	
-	yum -y install etcd
+	yum -d0 -e0 -y install etcd
 	EOH
 end
 
