@@ -1,6 +1,5 @@
 include_recipe 'kubernetes-rhel::repo-setup'
 
-
 etcd_endpoint="http://root:#{node['etcd']['password']}@#{node['etcd']['elb_url']}:80"
 execute 'set_flanneld_CIDR_at_ETCD' do
 	command "curl -L #{etcd_endpoint}/v2/keys/coreos.com/network/config -XPUT -d value=\"{\\\"Network\\\": \\\"#{node['kubernetes']['cluster_cidr']}\\\" }\""

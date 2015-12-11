@@ -1,6 +1,4 @@
-service "flanneld" do
-	action :start
-end
+include_recipe 'kubernetes-rhel::master-setup'
 
 service "kube-apiserver" do
 	action :start

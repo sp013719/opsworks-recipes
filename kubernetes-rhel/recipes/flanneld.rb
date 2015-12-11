@@ -1,6 +1,6 @@
 include_recipe 'kubernetes-rhel::repo-setup'
 
-package ['flannel']
+package 'flannel'
 
 etcd_endpoint="http://root:#{node['etcd']['password']}@#{node['etcd']['elb_url']}"
 

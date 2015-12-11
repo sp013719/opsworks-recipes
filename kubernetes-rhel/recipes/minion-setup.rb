@@ -1,6 +1,6 @@
 include_recipe 'kubernetes-rhel::repo-setup'
 
-package ['kubernetes-node']
+package 'kubernetes-node'
 
 template "/etc/kubernetes/conf" do
 	mode "0755"
