@@ -11,16 +11,16 @@ KUBE_API_ADDRESS="--address=0.0.0.0"
 KUBE_API_PORT="--port=8080"
 
 # Port minions listen on
-# KUBELET_PORT=”—kubelet_port=10250”
+# KUBELET_PORT="kubelet_port=10250"
 
 # Comma separated list of nodes in the etcd cluster
-KUBE_ETCD_SERVERS="--etcd_servers=<etcd endpoint URL>:8080"
+KUBE_ETCD_SERVERS="--etcd_servers=<%= @etcd_server %>:80"
 
 # Address range to use for services
-KUBE_SERVICE_ADDRESSES="-service-cluster-ip-range=<CIDR of overlay network>"
+KUBE_SERVICE_ADDRESSES="-service-cluster-ip-range=<%= @cluster_cidr %>"
 
 # default admission control policies
 KUBE_ADMISSION_CONTROL="--admission_control=NamespaceLifecycle,NamespaceExists,LimitRanger,SecurityContextDeny,ServiceAccount,ResourceQuota"
 
 # Add your own!
-KUBE_API_ARGS="--cluter_name=<your cluster name>"
+KUBE_API_ARGS="--cluter_name=<%= @cluster_name %> --basic-auth-file="<%= @ba_path %>""
