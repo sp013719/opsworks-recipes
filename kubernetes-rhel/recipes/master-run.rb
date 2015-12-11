@@ -1,4 +1,10 @@
 include_recipe 'kubernetes-rhel::master-setup'
+include_recipe 'kubernetes-rhel::flanneld'
+
+# ignore this if you don't want flanneld working on master node
+service 'flanneld' do
+	action :start
+end
 
 service "kube-apiserver" do
 	action :start

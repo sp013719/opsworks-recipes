@@ -1,5 +1,6 @@
 include_recipe 'kubernetes-rhel::repo-setup'
 
+# only install flanneld, not start the service, because of the dependency
 package 'flannel'
 
 etcd_endpoint="http://root:#{node['etcd']['password']}@#{node['etcd']['elb_url']}"
@@ -11,11 +12,7 @@ template "/etc/sysconfig/flanneld" do
 	variables ({
 		:elb_url => etcd_endpoint,
 	})
-	notifies :start, 'service[flanneld]', :delayed
 	subscribes :create, "package[flannel]", :delayed
 end
 
 
-service "flanneld" do
-	action :nothing
-end

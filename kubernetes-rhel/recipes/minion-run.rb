@@ -2,8 +2,13 @@ include_recipe 'kubernetes-rhel::minion-setup'
 include_recipe 'kubernetes-rhel::flanneld'
 include_recipe 'kubernetes-rhel::docker'
 
-service "docker" do
+service "flanneld" do 
 	action :start
+	notifies :start, 'service[docker]', :delayed
+end
+
+service "docker" do
+	action :nothing
 	notifies :start, 'service[kubelet]', :delayed
 	notifies :start, 'service[kube-proxy]', :delayed
 end
