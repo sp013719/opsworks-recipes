@@ -8,7 +8,6 @@ bash 'wait_a_moment' do
         sleep 1
         tries=$((tries + 1))
     done	
-	yum -y update
 	yum -y install etcd
 	EOH
 end
