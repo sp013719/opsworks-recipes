@@ -4,6 +4,7 @@ bash "enable-repo" do
 	yum repolist all
 	yum-config-manager --enable rhui-REGION-rhel-server-optional
 	yum-config-manager --enable rhui-REGION-rhel-server-extras
+	yum -y install wget
     EOH
     action :run
 end 
