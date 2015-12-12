@@ -5,6 +5,8 @@ package 'flannel'
 
 etcd_endpoint="http://root:#{node['etcd']['password']}@#{node['etcd']['elb_url']}"
 
+Chef::Log.info("YO!!! MAN!!! #{etcd_endpoint}")
+
 template "/etc/sysconfig/flanneld" do
 	mode "0755"
 	owner "root"
