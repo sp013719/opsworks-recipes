@@ -14,7 +14,7 @@ KUBE_API_PORT="--port=8080"
 # KUBELET_PORT="kubelet_port=10250"
 
 # Comma separated list of nodes in the etcd cluster
-KUBE_ETCD_SERVERS="--etcd_servers=<%= @etcd_server %>:80"
+KUBE_ETCD_SERVERS="--etcd_servers=<%= @etcd_server %>"
 
 # Address range to use for services
 KUBE_SERVICE_ADDRESSES="-service-cluster-ip-range=<%= @cluster_cidr %>"
