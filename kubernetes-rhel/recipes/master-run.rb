@@ -4,8 +4,14 @@ include_recipe 'kubernetes::flanneld'
 #version newer than 0.5.2 won't pass etcd URL with BA
 
 # ignore this if you don't want flanneld working on master node
-service 'flanneld' do
-	action :start
+#service 'flanneld' do
+#	action :start
+#end
+bash 'start_flanneld' do
+  user 'root'
+  code <<-EOH
+  service flanneld start
+  EOH
 end
 
 service "kube-apiserver" do
