@@ -15,12 +15,14 @@ end
 
 template "/etc/sysconfig/docker" do
 	mode "0644"
-    owner "root"
-    source "docker.erb"
+	owner "root"
+	source "docker.erb"
+	action :nothing
 end
 
 template "/etc/sysconfig/docker" do
-    mode "0644"
-    owner "root"
-    source "docker.service.erb"
+	mode "0644"
+	owner "root"
+	source "docker.service.erb"
+	action :nothing
 end
