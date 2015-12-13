@@ -1,5 +1,5 @@
 include_recipe 'kubernetes-rhel::minion-setup'
-include_recipe 'kubernetes-rhel::flanneld'
+include_recipe 'kubernetes-rhel::flanneld-init'
 include_recipe 'kubernetes-rhel::docker'
 
 service "flanneld" do 
