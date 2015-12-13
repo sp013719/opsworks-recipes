@@ -9,11 +9,5 @@ template '/etc/etcd/etcd.conf' do
 	mode "0755"
 	owner "root"
 	subscribes :create, "package[etcd]", :delayed
-	#subscribes :create, "bash[wait_a_moment]", :delayed
-	notifies :start, "service[etcd]", :delayed
-end
-
-service "etcd" do
-	action :nothing
 end
 

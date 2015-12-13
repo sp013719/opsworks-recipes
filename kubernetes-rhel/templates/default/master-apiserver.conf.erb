@@ -17,10 +17,10 @@ KUBE_API_PORT="--port=8080"
 KUBE_ETCD_SERVERS="--etcd_servers=<%= @etcd_server %>"
 
 # Address range to use for services
-KUBE_SERVICE_ADDRESSES="-service-cluster-ip-range=<%= @cluster_cidr %>"
+KUBE_SERVICE_ADDRESSES="--service-cluster-ip-range=<%= @cluster_cidr %>"
 
 # default admission control policies
 KUBE_ADMISSION_CONTROL="--admission_control=NamespaceLifecycle,NamespaceExists,LimitRanger,SecurityContextDeny,ServiceAccount,ResourceQuota"
 
 # Add your own!
-KUBE_API_ARGS="--cluter_name=<%= @cluster_name %> --basic-auth-file="<%= @ba_path %>""
+KUBE_API_ARGS="--cluster_name=<%= @cluster_name %> --basic-auth-file=<%= @ba_path %> --cloud-provider=aws"

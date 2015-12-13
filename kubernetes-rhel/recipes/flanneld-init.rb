@@ -14,9 +14,9 @@ end
 template "/etc/init.d/flanneld" do
   mode "0755"
   owner "root"
-  source "flanneld.erb"
+  source "flanneld-init-conf.erb"
   variables ({
-	:elb_url => node['etcd']['elb_url'],
+	:etcd_url => node['etcd']['elb_url'],
 	:etcd_password => node['etcd']['password']
   })
   notifies :disable, 'service[flanneld]', :delayed

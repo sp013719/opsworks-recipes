@@ -14,16 +14,16 @@ template "/etc/kubernetes/apiserver" do
 	source "master-apiserver.conf.erb"
 	variables({
 		:etcd_server => etcd_endpoint,
-		:ba_path => "/root/ba_file",
+		:ba_path => "/opt/ba_file",
 		:cluster_cidr => node['kubernetes']['cluster_cidr'],
 		:cluster_name => "happy-k8s-cluster"
 	})
 	subscribes :create, "package[kubernetes-master]", :delayed
 end
 
-file "/root/ba_file" do
-	owner 'root'
-	group 'root'
+file "/opt/ba_file" do
+	owner 'kube'
+	group 'kube'
 	mode '0600'
 	content "#{node['ba']['password']},#{node['ba']['account']},#{node['ba']['uid']}"
 	action :create
