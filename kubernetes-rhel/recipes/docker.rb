@@ -20,7 +20,7 @@ template "/etc/sysconfig/docker" do
 	action :nothing
 end
 
-template "/etc/sysconfig/docker" do
+template "/usr/lib/systemd/system/docker.service" do
 	mode "0644"
 	owner "root"
 	source "docker.service.erb"
