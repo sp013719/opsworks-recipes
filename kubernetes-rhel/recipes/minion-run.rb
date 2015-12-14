@@ -11,6 +11,15 @@ bash 'start_flanneld' do
 	code <<-EOH
 	service flanneld start
 	EOH
+	notifies :run, 'bash[reload-docker-service]', :delayed
+end
+
+bash 'reload-docker-service' do
+	user 'root'
+	code <<-EOH
+	systemctl daemon-reload	
+	EOH
+	action :nothing
 	notifies :start, 'service[docker]', :delayed
 end
 
