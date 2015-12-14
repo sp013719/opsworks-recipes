@@ -1,5 +1,6 @@
 include_recipe 'kubernetes-rhel::repo-setup'
 #for fear it is installed docker, instead of docker-engine
+include_recipe 'kubernetes-rhel::flanneld-init'
 include_recipe 'kubernetes-rhel::docker'
 
 package 'kubernetes-node'
