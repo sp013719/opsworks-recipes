@@ -20,7 +20,7 @@ KUBE_ETCD_SERVERS="--etcd_servers=<%= @etcd_server %>"
 KUBE_SERVICE_ADDRESSES="--service-cluster-ip-range=<%= @cluster_cidr %>"
 
 # default admission control policies
-KUBE_ADMISSION_CONTROL="--admission_control=NamespaceLifecycle,NamespaceExists,LimitRanger,SecurityContextDeny,ServiceAccount,ResourceQuota"
+KUBE_ADMISSION_CONTROL="--admission_control=NamespaceLifecycle,NamespaceExists,LimitRanger,SecurityContextDeny,ResourceQuota"
 
 # Add your own!
 KUBE_API_ARGS="--cluster_name=<%= @cluster_name %> --basic-auth-file=<%= @ba_path %> --cloud-provider=aws"
