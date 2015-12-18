@@ -1,21 +1,9 @@
 include_recipe 'kubernetes-rhel::repo-setup'
 
-template "/etc/yum.repos.d/docker.repo" do
-	mode "0644"
-    owner "root"
-    source "docker.repo.erb"
-#    notifies :install, "package[docker-engine]", :delayed
-    notifies :run, "bash[install-docker-engine]", :delayed
-end
-
-bash 'install-docker-engine' do
-	user 'root'
-	code <<-EOH	
-	yum -y install docker-engine
-	EOH
-	action :nothing
+package 'docker' do
+	action :install
 	notifies :create, "template[/etc/sysconfig/docker]", :delayed
-	notifies :create, "template[/usr/lib/systemd/system/docker.service]", :delayed
+	notifies :run, "bash[add-flanneld-in-docker]", :delayed
 end
 
 template "/etc/sysconfig/docker" do
@@ -24,10 +12,14 @@ template "/etc/sysconfig/docker" do
 	source "docker.erb"
 	action :nothing
 end
-
-template "/usr/lib/systemd/system/docker.service" do
-	mode "0644"
-	owner "root"
-	source "docker.service.erb"
-	action :nothing
+#insert environment file after docker network environment file
+bash 'add-flanneld-in-docker' do
+    user 'root'
+	cwd '/usr/lib/systemd/system'
+    code <<-EOH
+	LINE_NUM=$(sed -n "0,/docker-network/p" docker.service | wc -l)
+	sed -i "${LINE_NUM}a EnvironmentFile=-/run/flannel/docker.env" docker.service
+    EOH
+    action :nothing
 end
+

@@ -33,6 +33,11 @@ start() {
 		> /var/log/flanneld.log 2>&1 &
 	RETVAL=$?
 	echo
+	# add docker network config
+	FLANNEL_SUBNET=$(fgrep "FLANNEL_SUBNET" /run/flannel/subnet.env | awk -F "=" '{print $2}')
+	FLANNEL_MTU=$(fgrep "FLANNEL_MTU" /run/flannel/subnet.env | awk -F "=" '{print $2}')
+	FLANNEL_IPMASQ=$(fgrep "FLANNEL_IPMASQ" /run/flannel/subnet.env | awk -F "=" '{print $2}')
+	echo "DOCKER_NETWORK_OPTIONS=\" --bip=$FLANNEL_SUBNET --mtu=$FLANNEL_MTU --ip-masq=$FLANNEL_IPMASQ \"" > /run/flannel/docker.env
 	[ $RETVAL -eq 0 ] && touch $lockfile
 	return $RETVAL
 }
@@ -42,7 +47,8 @@ stop() {
         echo -n $"Shutting down $prog: "
 	killproc $prog
 	RETVAL=$?
-        echo
+    echo
+	rm -f /run/flannel/docker.env
 	[ $RETVAL -eq 0 ] && rm -f $lockfile
 	return $RETVAL
 }
