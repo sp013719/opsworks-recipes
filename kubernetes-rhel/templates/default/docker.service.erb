@@ -6,6 +6,7 @@ After=network.target
 [Service]
 Type=notify
 EnvironmentFile=-/etc/sysconfig/docker
+EnvironmentFile=-/run/flannel/docker.env
 Environment=GOTRACEBACK=crash
 ExecStart=/usr/bin/docker daemon $OPTIONS \
           $DOCKER_STORAGE_OPTIONS \

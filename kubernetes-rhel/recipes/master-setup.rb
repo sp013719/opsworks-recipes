@@ -50,11 +50,18 @@ template "/usr/lib/systemd/system/kube-scheduler.service" do
 	subscribes :create, "bash[master-file-copy]", :delayed
 end
 
+user 'kube' do
+	home '/home/kube'
+	shell '/bin/bash'
+	action :create
+	notifies :create, "file[/opt/ba_file]", :delayed
+end
+
 file "/opt/ba_file" do
-	owner 'root'
-	group 'root'
+	owner 'kube'
+	group 'kube'
 	mode '0600'
 	content "#{node['ba']['password']},#{node['ba']['account']},#{node['ba']['uid']}"
-	action :create
+	action :nothing
 end
 
