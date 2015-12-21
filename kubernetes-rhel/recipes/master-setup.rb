@@ -51,8 +51,8 @@ template "/usr/lib/systemd/system/kube-scheduler.service" do
 end
 
 file "/opt/ba_file" do
-	owner 'kube'
-	group 'kube'
+	owner 'root'
+	group 'root'
 	mode '0600'
 	content "#{node['ba']['password']},#{node['ba']['account']},#{node['ba']['uid']}"
 	action :create
