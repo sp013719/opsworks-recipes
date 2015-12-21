@@ -1,5 +1,4 @@
 include_recipe 'kubernetes-rhel::master-setup'
-#include_recipe 'kubernetes-rhel::flanneld'
 include_recipe 'kubernetes-rhel::flanneld-init' 
 #version newer than 0.5.2 won't pass etcd URL with BA
 
@@ -8,14 +7,16 @@ include_recipe 'kubernetes-rhel::flanneld-init'
 #	action :start
 #end
 bash 'start_flanneld' do
-  user 'root'
-  code <<-EOH
-  service flanneld start
-  EOH
+	user 'root'
+	code <<-EOH	
+	systemctl daemon-reload
+	service flanneld start
+	EOH
+	notifies :start, 'service[kube-apiserver]', :delayed
 end
 
 service "kube-apiserver" do
-	action :start
+	action :nothing
 	notifies :start, 'service[kube-scheduler]', :delayed
 	notifies :start, 'service[kube-controller-manager]', :delayed
 end

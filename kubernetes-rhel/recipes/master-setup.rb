@@ -16,9 +16,9 @@ bash "master-file-copy" do
 	EOH
 end
 
-# add config file of apiserver
+# add config files
 template "/etc/kubernetes/apiserver" do
-	mode "0755"
+	mode "0644"
 	owner "root"
 	source "master-apiserver.conf.erb"
 	variables({
@@ -27,6 +27,13 @@ template "/etc/kubernetes/apiserver" do
 		:cluster_cidr => node['kubernetes']['cluster_cidr'],
 		:cluster_name => "happy-k8s-cluster"
 	})
+	subscribes :create, "bash[master-file-copy]", :delayed
+end
+
+template "/etc/kubernetes/config" do
+	mode "0644"
+	owner "root"
+	source "master-conf.erb"
 	subscribes :create, "bash[master-file-copy]", :delayed
 end
 
