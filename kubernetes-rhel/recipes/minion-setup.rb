@@ -1,24 +1,44 @@
 include_recipe 'kubernetes-rhel::repo-setup'
-#for fear it is installed docker, instead of docker-engine
-include_recipe 'kubernetes-rhel::flanneld-init'
-include_recipe 'kubernetes-rhel::docker'
+include_recipe 'kubernetes-rhel::k8s-setup'
 
-package 'kubernetes-node'
-
+#package 'kubernetes-node'
+bash "minion-file-copy" do
+    user 'root'
+    cwd '/tmp//kubernetes/server/kubernetes/server/bin'
+    code <<-EOH
+	mkdir /var/lib/kubelet
+    mkdir /etc/kubernetes
+    cp kubelet kube-proxy /usr/local/bin/
+    EOH
+end
+# add config files
 template "/etc/kubernetes/conf" do
-	mode "0755"
+	mode "0644"
 	owner "root"
 	source "minion-conf.erb"
 	variables :master_endpoint => node['kubernetes']['master_url']
-	subscribes :create, "package[kubernetes-node]", :delayed
+	subscribes :create, "bash[minion-file-copy]", :delayed
 end
 
 template "/etc/kubernetes/kubelet" do
-	mode "0775"
+	mode "0644"
 	owner "root"
 	source 	"minion-kubelet.erb"
 	variables :master_endpoint => node['kubernetes']['master_url']
-	subscribes :create, "package[kubernetes-node]", :delayed
+	subscribes :create, "bash[minion-file-copy]", :delayed
 end
 
+# add service init files
+template "/usr/lib/systemd/system/kubelet.service" do
+    mode "0644"
+    owner "root"
+    source "kubelet.service.erb"
+    subscribes :create, "bash[minion-file-copy]", :delayed
+end
+template "/usr/lib/systemd/system/kube-proxy.service" do
+    mode "0644"
+    owner "root"
+    source "kube-proxy.service.erb"
+    subscribes :create, "bash[minion-file-copy]", :delayed
+end
 
