@@ -5,7 +5,6 @@ template "/etc/yum.repos.d/docker.repo" do
     owner "root"
     source "docker.repo.erb"
     notifies :install, "package[docker-engine]", :delayed
-#    notifies :run, "bash[install-docker-engine]", :delayed
 end
 
 package 'docker-engine' do
@@ -13,16 +12,6 @@ package 'docker-engine' do
 	notifies :create, "template[/etc/sysconfig/docker]", :delayed
 	notifies :create, "template[/usr/lib/systemd/system/docker.service]", :delayed
 end
-
-#bash 'install-docker-engine' do
-#	user 'root'
-#	code <<-EOH	
-#	yum -y install docker-engine
-#	EOH
-#	action :nothing
-#	notifies :create, "template[/etc/sysconfig/docker]", :delayed
-#	notifies :create, "template[/usr/lib/systemd/system/docker.service]", :delayed
-#end
 
 template "/etc/sysconfig/docker" do
 	mode "0644"
