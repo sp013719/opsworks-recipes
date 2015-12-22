@@ -1,6 +1,3 @@
-include_recipe 'kubernetes-rhel::repo-setup'
-include_recipe 'kubernetes-rhel::k8s-setup'
-
 #package 'kubernetes-node'
 bash "minion-file-copy" do
     user 'root'
