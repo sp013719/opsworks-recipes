@@ -17,7 +17,7 @@ template "/etc/kubernetes/conf" do
 	owner "root"
 	source "minion-conf.erb"
 	variables :master_endpoint => node['kubernetes']['master_url']
-	subscribes :create, "bash[minion-file-copy]", :delayed
+	subscribes :create, "bash[minion-file-copy]", :immediately
 	action :nothing
 end
 
@@ -26,7 +26,7 @@ template "/etc/kubernetes/kubelet" do
 	owner "root"
 	source 	"minion-kubelet.erb"
 	variables :master_endpoint => node['kubernetes']['master_url']
-	subscribes :create, "bash[minion-file-copy]", :delayed
+	subscribes :create, "bash[minion-file-copy]", :immediately
 	action :nothing
 end
 
@@ -35,14 +35,14 @@ template "/usr/lib/systemd/system/kubelet.service" do
     mode "0644"
     owner "root"
     source "kubelet.service.erb"
-    subscribes :create, "bash[minion-file-copy]", :delayed
+    subscribes :create, "bash[minion-file-copy]", :immediately
 	action :nothing
 end
 template "/usr/lib/systemd/system/kube-proxy.service" do
     mode "0644"
     owner "root"
     source "kube-proxy.service.erb"
-    subscribes :create, "bash[minion-file-copy]", :delayed
+    subscribes :create, "bash[minion-file-copy]", :immediately
 	action :nothing
 end
 
