@@ -3,6 +3,8 @@ bash 'start_flanneld_and_docker' do
 	code <<-EOH
 	systemctl daemon-reload	
 	service flanneld start
+	sleep 10
+	service flanneld restart
 	service docker start
 	EOH
 	notifies :start, 'service[kubelet]', :delayed
