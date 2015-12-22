@@ -10,6 +10,7 @@ bash "minion-file-copy" do
     cp kubelet kube-proxy /usr/local/bin/
     EOH
 end
+
 # add config files
 template "/etc/kubernetes/conf" do
 	mode "0644"
@@ -17,6 +18,7 @@ template "/etc/kubernetes/conf" do
 	source "minion-conf.erb"
 	variables :master_endpoint => node['kubernetes']['master_url']
 	subscribes :create, "bash[minion-file-copy]", :delayed
+	action :nothing
 end
 
 template "/etc/kubernetes/kubelet" do
@@ -25,6 +27,7 @@ template "/etc/kubernetes/kubelet" do
 	source 	"minion-kubelet.erb"
 	variables :master_endpoint => node['kubernetes']['master_url']
 	subscribes :create, "bash[minion-file-copy]", :delayed
+	action :nothing
 end
 
 # add service init files
@@ -33,11 +36,13 @@ template "/usr/lib/systemd/system/kubelet.service" do
     owner "root"
     source "kubelet.service.erb"
     subscribes :create, "bash[minion-file-copy]", :delayed
+	action :nothing
 end
 template "/usr/lib/systemd/system/kube-proxy.service" do
     mode "0644"
     owner "root"
     source "kube-proxy.service.erb"
     subscribes :create, "bash[minion-file-copy]", :delayed
+	action :nothing
 end
 

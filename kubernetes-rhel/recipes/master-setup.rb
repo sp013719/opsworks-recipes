@@ -28,6 +28,7 @@ template "/etc/kubernetes/apiserver" do
 		:cluster_name => "happy-k8s-cluster"
 	})
 	subscribes :create, "bash[master-file-copy]", :delayed
+	action :nothing
 end
 
 template "/etc/kubernetes/config" do
@@ -35,6 +36,7 @@ template "/etc/kubernetes/config" do
 	owner "root"
 	source "master-conf.erb"
 	subscribes :create, "bash[master-file-copy]", :delayed
+	action :nothing
 end
 
 # add service init files
@@ -43,18 +45,21 @@ template "/usr/lib/systemd/system/kube-apiserver.service" do
 	owner "root"
 	source "kube-apiserver.service.erb"
 	subscribes :create, "bash[master-file-copy]", :delayed
+	action :nothing
 end
 template "/usr/lib/systemd/system/kube-controller-manager.service" do
 	mode "0644"
 	owner "root"
 	source "kube-controller-manager.service.erb"
 	subscribes :create, "bash[master-file-copy]", :delayed
+	action :nothing
 end
 template "/usr/lib/systemd/system/kube-scheduler.service" do
 	mode "0644"
 	owner "root"
 	source "kube-scheduler.service.erb"
 	subscribes :create, "bash[master-file-copy]", :delayed
+	action :nothing
 end
 
 user 'kube' do
